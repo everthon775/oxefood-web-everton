@@ -38,7 +38,7 @@ export default function ClientePage() {
            ]} />
 
            <div style={{ marginTop: '40px', marginLeft: '10%', marginRight: '10%' }}>
-<div className="overflow-x-auto shadow-sm">
+            <div className="overflow-x-auto shadow-sm">
                    <div className="flex items-center justify-between mb-6" style={{marginTop: '20px', marginLeft: '10px', marginRight: '10px'}}>
 
                      <h1 className="text-3xl font-bold text-gray-800">
@@ -79,5 +79,6 @@ export default function ClientePage() {
            <Footer />
        </div>
    );
+   
 }
 

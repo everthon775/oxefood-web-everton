@@ -21,6 +21,8 @@ export default function Menu() {
                     <ul className="menu">
                         <li><a href="/cliente">Listar</a></li>
                         <li><a href="/cliente-form">Cadastrar</a></li>
+                      
+
                     </ul>
                 </div>
 
@@ -29,6 +31,7 @@ export default function Menu() {
                     <ul className="menu">
                         <li><a href="#">Listar</a></li>
                         <li><a href="#">Cadastrar</a></li>
+
                     </ul>
                 </div>
 
