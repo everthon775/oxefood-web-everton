@@ -1,1 +1,1 @@
-export const MAPPING_CONTROLLER_CLIENTE = '/api/produto'
+export const MAPPING_CONTROLLER_PRODUTO = '/api/produto'
