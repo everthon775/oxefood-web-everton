@@ -7,6 +7,8 @@ import ClientePage from "../features/cliente/page/ClientePage";
 
 import Home from "../features/home/Home";
 
+import ProdutoPage from "../features/prodto/page/Home";
+
 
 
 export default function Router() {
@@ -23,6 +25,9 @@ export default function Router() {
                <Route path="/cliente" element={<ClientePage />} />
 
                 <Route path="/cliente-form" element={<ClienteForm />} />
+
+                <Route path="/produto" element={<ProdutoPage/>}/>
+                <Route path="/empresa" element={<EmpresaPage/>}/>
 
            </Routes>
 

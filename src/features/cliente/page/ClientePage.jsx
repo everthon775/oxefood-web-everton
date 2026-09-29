@@ -78,6 +78,8 @@ export default function ClientePage() {
            </div>
            <Footer />
        </div>
+
+       
    );
    
 }
