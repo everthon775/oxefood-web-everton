@@ -5,7 +5,7 @@ import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import NewButton from "../../../shared/components/NewButton";
 import { formatarData } from "../../../shared/util/dateUtils";
-import { listar } from "../../../shared/services/crudService";
+import { buscarPorId, listar, remover } from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_PRODUTO } from "../service/produtoService";
 
 export default function ProdutoPage() {
@@ -67,6 +67,7 @@ export default function ProdutoPage() {
                                            <CrudActions
                                                onEdit={() => editar(produto.id)}
                                                onDelete={() => confirmarRemover(produto.id)}
+                                               onDetail={() => Detatlhar(produto.id)}
                                            />
                                        </td>
                                    </tr>
