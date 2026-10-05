@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "OxeFood - CRUD Modelo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Empresa",
+      "item": [
+        {"name":"Listar","request":{"method":"GET","url":"http://localhost:3001/api/empresa"}},
+        {"name":"Buscar por ID","request":{"method":"GET","url":"http://localhost:3001/api/empresa/1"}},
+        {"name":"Cadastrar","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nome\": \"Minha Empresa\",\n  \"cnpj\": \"11.111.111/0001-11\",\n  \"foneFixo\": \"(81) 3333-3333\"\n}"},"url":"http://localhost:3001/api/empresa"}},
+        {"name":"Alterar","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nome\": \"Empresa Alterada\",\n  \"cnpj\": \"22.222.222/0001-22\",\n  \"foneFixo\": \"(81) 4444-4444\"\n}"},"url":"http://localhost:3001/api/empresa/1"}},
+        {"name":"Excluir","request":{"method":"DELETE","url":"http://localhost:3001/api/empresa/1"}}
+      ]
+    },
+    {
+      "name": "Produto",
+      "item": [
+        {"name":"Listar","request":{"method":"GET","url":"http://localhost:3001/api/produto"}},
+        {"name":"Buscar por ID","request":{"method":"GET","url":"http://localhost:3001/api/produto/1"}},
+        {"name":"Cadastrar","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nome\": \"Feijão\",\n  \"codigo\": \"002\",\n  \"tipo\": \"Alimento\"\n}"},"url":"http://localhost:3001/api/produto"}},
+        {"name":"Alterar","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nome\": \"Feijão Alterado\",\n  \"codigo\": \"003\",\n  \"tipo\": \"Alimento\"\n}"},"url":"http://localhost:3001/api/produto/1"}},
+        {"name":"Excluir","request":{"method":"DELETE","url":"http://localhost:3001/api/produto/1"}}
+      ]
+    }
+  ]
+}
