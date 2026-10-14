@@ -1,1 +1,0 @@
-export const MAPPING_CONTROLLER_PRODUTO = '/api/produto'

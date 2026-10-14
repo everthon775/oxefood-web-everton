@@ -7,13 +7,16 @@ import ClientePage from "../features/cliente/page/ClientePage";
 
 import Home from "../features/home/Home";
 
-import ProdutoPage from "../features/produto/page/Home";
+import ProdutoPage from "../features/produto/page/ProdutoPage";
 
 import ProdutoForm from "../features/produto/page/ProdutoForm";
 
 import EmpresaPage from "../features/empresa/page/EmpresaPage";
 
 import EmpresaForm from "../features/empresa/page/EmpresaForm";
+import CategoriaPage from "../features/categoria/page/CategoriaPage";
+import CategoriaForm from "../features/categoria/page/CategoriaForm";
+import VotoForm from "../features/voto/page/VotoForm";
 
 
 
@@ -37,6 +40,8 @@ export default function Router() {
                 <Route path="/produto-form" element={<ProdutoForm/>}/>
                 <Route path="/empresa" element={<EmpresaPage/>}/>
                 <Route path="/empresa-form" element={<EmpresaForm/>}/>
+                <Route path="/categoria" element={<VotoPage/>}/>
+                <Route path="/categoria-form" element={<VotoForm/>}/>
 
 
            </Routes>

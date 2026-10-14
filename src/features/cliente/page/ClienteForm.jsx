@@ -5,7 +5,7 @@ import BackButton from "../../../shared/components/BackButton";
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
-import SaveButton from "../../../shared/components/SaveButton";
+import SaveButton from "../shared/components/SaveButton";
 import { cadastrar } from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_CLIENTE } from "../../cliente/service/clienteService";
 

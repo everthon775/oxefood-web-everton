@@ -26,11 +26,27 @@ export default function Menu() {
                     </ul>
                 </div>
 
+                <button popoverTarget="menu-categorias"> <strong> Categoria </strong> </button>
+                <div id="menu-categorias" popover="auto">
+                    <ul className="menu">
+                        <li><a href="/categoria">Listar</a></li>
+                        <li><a href="/categoria-form">Cadastrar</a></li>
+                    </ul>
+                </div>
+
+                <button popoverTarget="menu-empresas"> <strong> Empresa </strong> </button>
+                <div id="menu-empresas" popover="auto">
+                    <ul className="menu">
+                        <li><a href="/empresa">Listar</a></li>
+                        <li><a href="/empresa-form">Cadastrar</a></li>
+                    </ul>
+                </div>
+
                 <button popoverTarget="menu-produtos"> <strong> Produto </strong> </button>
                 <div id="menu-produtos" popover="auto">
                     <ul className="menu">
-                        <li><a href="#">Listar</a></li>
-                        <li><a href="#">Cadastrar</a></li>
+                        <li><a href="/produto">Listar</a></li>
+                        <li><a href="/produto-form">Cadastrar</a></li>
 
                     </ul>
                 </div>

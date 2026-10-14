@@ -6,15 +6,14 @@ import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import NewButton from "../../../shared/components/NewButton";
 import { buscarPorId, listar, remover } from "../../../shared/services/crudService";
-import { MAPPING_CONTROLLER_CATEGORIA } from "../service/categoriaService";
+import {  MAPPING_CONTROLLER_VOTO } from "../service/votoService";
 
-export default function CategoriaPage() {
+
+export default function VotoPage() {
 
     const [lista, setLista] = useState([]);
-    const [categoria, setCategoria] = useState({
-        id: "",
-        nome: "",
-        descricao: ""
+    const [voto, setVoto] = useState({
+        
     });
 
     useEffect(() => {
@@ -23,25 +22,25 @@ export default function CategoriaPage() {
 
     async function carregar() {
         try {
-            const data = await listar(MAPPING_CONTROLLER_CATEGORIA);
+            const data = await listar(MAPPING_CONTROLLER_VOTO);
             setLista(data);
         } catch (erro) {
             console.error(erro);
-            toast.error("Erro ao carregar categorias.");
+            toast.error("Erro ao carregar VOTOS.");
         }
     }
 
     function editar(id) {
-        window.location.href = `/categoria-form?id=${id}`;
+        window.location.href = `/voto-form?id=${numero}`;
     }
 
-    async function confirmarRemover(id) {
+    async function confirmarRemover(numero) {
         if (!confirm("Deseja realmente excluir esta categoria?")) {
             return;
         }
 
         try {
-            await remover(MAPPING_CONTROLLER_CATEGORIA, id);
+            await remover(MAPPING_CONTROLLER_VOTO, id);
             await carregar();
             toast.success("Categoria removida com sucesso!");
         } catch (erro) {
@@ -52,12 +51,10 @@ export default function CategoriaPage() {
 
     async function detalhar(id) {
         try {
-            const data = await buscarPorId(MAPPING_CONTROLLER_CATEGORIA, id);
+            const data = await buscarPorId(MAPPING_CONTROLLER_VOTO, numero);
 
-            setCategoria({
-                id: data.id,
-                nome: data.nome ?? "",
-                descricao: data.descricao ?? ""
+            setVoto({
+               
             });
 
             document.getElementById("modal-detalhar-categoria").showModal();
@@ -72,7 +69,7 @@ export default function CategoriaPage() {
             <Menu />
 
             <Breadcrumbs items={[
-                { label: "Categoria" },
+                { label: "Voto" },
                 { label: "Listar" }
             ]} />
 
@@ -107,7 +104,7 @@ export default function CategoriaPage() {
                                 {lista.map((item) => (
                                     <tr key={item.id}>
                                         <td style={{ textAlign: "center" }}>
-                                            {item.id}
+                                            {item.numero}
                                         </td>
 
                                         <td>
@@ -120,9 +117,9 @@ export default function CategoriaPage() {
 
                                         <td style={{ textAlign: "center" }}>
                                             <CrudActions
-                                                onDetail={() => detalhar(item.id)}
-                                                onEdit={() => editar(item.id)}
-                                                onDelete={() => confirmarRemover(item.id)}
+                                                onDetail={() => detalhar(item.numero)}
+                                                onEdit={() => editar(item.numero)}
+                                                onDelete={() => confirmarRemover(item.numero)}
                                             />
                                         </td>
                                     </tr>

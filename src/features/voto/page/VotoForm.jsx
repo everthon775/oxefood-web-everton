@@ -6,40 +6,45 @@ import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import SaveButton from "../../../shared/components/SaveButton";
-import {
-    atualizar,
-    buscarPorId,
-    cadastrar
-} from "../../../shared/services/crudService";
-import { MAPPING_CONTROLLER_CATEGORIA } from "../service/categoriaService";
+import {atualizar,buscarPorId,cadastrar} from "../../../shared/services/crudService";
+import { MAPPING_CONTROLLER_VOTO } from "../service/VotoService";
 
-export default function CategoriaForm() {
+
+export default function VotoForm() {
 
     const [searchParams] = useSearchParams();
 
     const id = searchParams.get("id");
     const modoEdicao = Boolean(id);
 
-    const [categoria, setCategoria] = useState({
-        id: "",
-        nome: "",
-        descricao: ""
+    const [voto, setVoto] = useState({
+       nomeEleitor: "",
+       dataVotacao:"",
+       numeroRegistroEleitoral: "",
+       numeroCandidatoDepFederal: "",
+       numeroCandidatoDepEstadual: "",
+       
+
+
     });
 
     useEffect(() => {
         if (modoEdicao) {
-            carregarCategoria();
+            carregarVoto();
         }
     }, [id]);
 
-    async function carregarCategoria() {
+    async function carregarVoto() {
         try {
-            const data = await buscarPorId(MAPPING_CONTROLLER_CATEGORIA, id);
+            const data = await buscarPorId(MAPPING_CONTROLLER_VOTO, id);
 
-            setCategoria({
+            setVoto({
                 id: data.id,
-                nome: data.nome ?? "",
-                descricao: data.descricao ?? ""
+                nomeEleitor: data.nomeEleitor ?? "",
+                numeroRegistroEleitoral: data.numeroRegistroEleitoral ?? "",
+                numeroCandidatoDepFederal: data.numeroCandidatoDepFederal ?? "",
+                
+
             });
         } catch (erro) {
             console.error(erro);
@@ -50,23 +55,23 @@ export default function CategoriaForm() {
     async function salvar() {
         try {
             if (modoEdicao) {
-                await atualizar(MAPPING_CONTROLLER_CATEGORIA, categoria);
+                await atualizar(MAPPING_CONTROLLER_VOTO, voto);
                 toast.success("Categoria atualizada com sucesso!");
             } else {
-                await cadastrar(MAPPING_CONTROLLER_CATEGORIA, {
-                    nome: categoria.nome,
-                    descricao: categoria.descricao
+                await cadastrar(MAPPING_CONTROLLER_VOTO, {
+                    nome: voto.nome,
+                    descricao: voto.descricao
                 });
                 toast.success("Categoria cadastrada com sucesso!");
             }
 
-            window.location.href = "/categoria";
+            window.location.href = "/voto";
         } catch (erro) {
             console.error(erro);
             toast.error(
                 modoEdicao
-                    ? "Erro ao atualizar categoria."
-                    : "Erro ao cadastrar categoria."
+                    ? "Erro ao atualizar voto."
+                    : "Erro ao cadastrar voto."
             );
         }
     }
@@ -111,13 +116,13 @@ export default function CategoriaForm() {
 
                                         <input
                                             type="text"
-                                            id="nome"
+                                            numero= "text"
                                             className="input input-bordered w-full"
-                                            value={categoria.nome}
+                                            value={voto.nomeEleitor}
                                             onChange={(event) =>
-                                                setCategoria({
-                                                    ...categoria,
-                                                    nome: event.target.value
+                                                setVoto({
+                                                    ...voto,
+                                                    nomeEleitor: event.target.value
                                                 })
                                             }
                                             required
@@ -134,10 +139,10 @@ export default function CategoriaForm() {
                                         <textarea
                                             id="descricao"
                                             className="textarea textarea-bordered w-full"
-                                            value={categoria.descricao}
+                                            value={voto.descricao}
                                             onChange={(event) =>
-                                                setCategoria({
-                                                    ...categoria,
+                                                setVoto({
+                                                    ...voto,
                                                     descricao: event.target.value
                                                 })
                                             }
@@ -151,7 +156,7 @@ export default function CategoriaForm() {
                             <div className="flex w-full">
                                 <div className="card rounded-box grid grow p-8">
                                     <div style={{ marginTop: "50px", textAlign: "left" }}>
-                                        <BackButton destino="/categoria" />
+                                        <BackButton destino="/voto" />
                                     </div>
                                 </div>
 

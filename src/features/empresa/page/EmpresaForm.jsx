@@ -1,171 +1,66 @@
-import { useState } from "react";
-import { IMaskInput } from 'react-imask';
-import { toast } from 'react-toastify';
-import BackButton from "../../../shared/components/BackButton";
-import Breadcrumbs from "../../../shared/components/Breadcrumbs";
-import Footer from "../../../shared/components/Footer";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Menu from "../../../shared/components/Menu";
+import Breadcrumbs from "../../../shared/components/Breadcrumbs";
+import BackButton from "../../../shared/components/BackButton";
 import SaveButton from "../../../shared/components/SaveButton";
-import { cadastrar } from "../../../shared/services/crudService";
-import { MAPPING_CONTROLLER_CLIENTE } from "../../cliente/service/produtoService";
+import Footer from "../../../shared/components/Footer";
+import { cadastrar, atualizar, buscarPorId } from "../../../shared/services/crudService";
+import { MAPPING_CONTROLLER_EMPRESA } from "../service/empresaService";
 
 export default function EmpresaForm() {
+    const [empresa, setEmpresa] = useState({ nome: "", cnpj: "", foneFixo: "" });
+    const [id, setId] = useState(null);
 
-    const [empresa, setEmpresa] = useState({
-        nome: "",
-        cnpj: "",
-        fonefixo: "",
-        
-    });
+    useEffect(() => {
+        const idUrl = new URLSearchParams(window.location.search).get("id");
+        if (idUrl) {
+            setId(idUrl);
+            buscarPorId(MAPPING_CONTROLLER_EMPRESA, idUrl).then(setEmpresa);
+        }
+    }, []);
 
     async function salvar() {
-        
         try {
-            await cadastrar(MAPPING_CONTROLLER_PRODUTO, produto);
-            toast.success("Cliente cadastrado com sucesso!");
+            if (id) {
+                await atualizar(MAPPING_CONTROLLER_EMPRESA + "/" + id, { ...empresa, id: Number(id) });
+                toast.success("Empresa alterada!");
+            } else {
+                await cadastrar(MAPPING_CONTROLLER_EMPRESA, empresa);
+                toast.success("Empresa cadastrada!");
+                setEmpresa({ nome: "", cnpj: "", foneFixo: "" });
+            }
         } catch (erro) {
-            toast.error("Erro ao cadastrar produto.");
+            toast.error("Erro ao salvar empresa.");
         }
     }
 
     return (
-
         <div>
             <Menu />
+            <Breadcrumbs items={[{ label: "Empresa" }, { label: "Cadastrar" }]} />
+            <div style={{ margin: "40px 10%" }}>
+                <h1 className="text-3xl font-bold">{id ? "Alterar Empresa" : "Nova Empresa"}</h1>
+                <div className="divider" />
 
-            <Breadcrumbs items={[
-                { label: "Produto" },
-                { label: "Cadastrar" }
-            ]} />
-            <div/>
-                <div style={{ marginTop: '40px', marginLeft: '10%', marginRight: '10%' }}>
+                <label className="fieldset-legend">Nome</label>
+                <input className="input input-bordered w-full mb-4" value={empresa.nome}
+                    onChange={(e) => setEmpresa({ ...empresa, nome: e.target.value })} />
 
-                <div className="overflow-x-auto shadow-sm">
+                <label className="fieldset-legend">CNPJ</label>
+                <input className="input input-bordered w-full mb-4" value={empresa.cnpj}
+                    onChange={(e) => setEmpresa({ ...empresa, cnpj: e.target.value })} />
 
-                    <div className="flex items-center justify-between mb-6" style={{marginTop: '20px', marginLeft: '10px', marginRight: '10px'}}>
+                <label className="fieldset-legend">Telefone</label>
+                <input className="input input-bordered w-full mb-4" value={empresa.foneFixo}
+                    onChange={(e) => setEmpresa({ ...empresa, foneFixo: e.target.value })} />
 
-                        <h1 className="text-3xl font-bold text-gray-800">
-                            Novo PRODUTO
-                        </h1>
-
-                    </div>
-
-                    <div className="divider divider-info" />
-
-                    <div className="overflow-x-auto" style={{padding: '30px'}}>
-                        <form>
-
-                            <div className="flex w-full" >
-                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
-
-                                    <fieldset className="fieldset w-full">
-                                        <label className="fieldset-legend" htmlFor="nome">Nome</label>
-                                        <input
-                                            type="text"
-                                            id="nome"
-                                            className="input input-bordered w-full"
-                                            value={produto.nome}
-                                            onChange={(e) => 
-                                                setEmpresa({ ...produto, nome: e.target.value }) 
-                                            }
-                                        />
-                                    </fieldset>
-                                    
-                                </div>
-                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
-
-                                    <fieldset className="fieldset w-full">
-                                        <label className="fieldset-legend" htmlFor="tipo">tipo</label>
-                                        <IMaskInput
-                                            mask="000.000.000-00"
-                                            value={produto.tipo}
-                                            onAccept={(value) =>
-                                                setEmpresa({ ...produto, tipo: value })
-                                            }
-                                            className="input input-bordered w-full"
-                                            id="tipo"
-                                        />
-                                    </fieldset>
-
-                                </div>
-                            </div>
-
-                            <div className="flex w-full" >
-                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
-
-                                    <fieldset className="fieldset w-full">
-                                        <label className="fieldset-legend" htmlFor="foneCelular">Fone Celular</label>
-                                        <IMaskInput
-                                            mask="(00) 0 0000.0000"
-                                            value={cliente.foneCelular}
-                                            onAccept={(value) =>
-                                                setProduto({ ...cliente, foneCelular: value })
-                                            }
-                                            className="input input-bordered w-full"
-                                            id="foneCelular"
-                                        />
-                                    </fieldset>
-                                    
-                                </div>
-
-                                    <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
-
-                                    <fieldset className="fieldset w-full">
-                                        <label className="fieldset-legend" htmlFor="foneFixo">Fone Fixo</label>
-                                        <IMaskInput
-                                            mask="qual tipo de produto voce quer"
-                                            value={produto.tipo}
-                                            onAccept={(value) =>
-                                                setEmpresa({ ...cliente, foneFixo: value })
-                                            }
-                                            className="input input-bordered w-full"
-                                            id="foneFixo"
-                                        />
-                                    </fieldset>
-                                    
-                                </div>
-                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
-
-                                    <fieldset className="fieldset w-full">
-                                        <legend className="fieldset-legend" htmlFor="dataNascimento">Data de Nascimento</legend>
-                                        <input 
-                                            type=""  
-                                            id="dataNascimento" 
-                                            className="input input-bordered w-full"
-                                            value={produto.codigo} 
-                                            onChange={(e) => 
-                                                setProduto({ ...cliente, dataNascimento: e.target.value }) 
-                                            }
-                                        />
-                                    </fieldset>
-
-                                </div>
-                            </div>
-                                <div className="flex w-full" >
-                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
-
-                                    <div style={{marginTop: '50px', textAlign: 'left'}}>
-                                        <BackButton destino="/cliente" />
-                                    </div>
-                                    
-                                </div>
-                                <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
-
-                                    <div style={{marginTop: '50px', textAlign: 'right'}}>
-                                        <SaveButton save={() => salvar()} />
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
+                <div className="flex justify-between mt-6">
+                    <BackButton destino="/empresa" />
+                    <SaveButton save={salvar} />
                 </div>
             </div>
-
             <Footer />
-
         </div>
-
     );
 }

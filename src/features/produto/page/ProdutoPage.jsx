@@ -1,83 +1,65 @@
 import { useEffect, useState } from "react";
-import Breadcrumbs from "../../../shared/components/Breadcrumbs";
-import CrudActions from "../../../shared/components/CrudActions";
-import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import NewButton from "../../../shared/components/NewButton";
-import { formatarData } from "../../../shared/util/dateUtils";
-import { buscarPorId, listar, remover } from "../../../shared/services/crudService";
+import CrudActions from "../../../shared/components/CrudActions";
+import Footer from "../../../shared/components/Footer";
+import Breadcrumbs from "../../../shared/components/Breadcrumbs";
+import { listar, remover } from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_PRODUTO } from "../service/produtoService";
 
 export default function ProdutoPage() {
+    const [lista, setLista] = useState([]);
 
-   const [lista, setLista] = useState([]);
+    useEffect(() => { carregar(); }, []);
 
-   useEffect(() => {
-       carregar();
-   }, []);
+    async function carregar() {
+        const dados = await listar(MAPPING_CONTROLLER_PRODUTO);
+        setLista(dados);
+    }
 
-   async function carregar() {
-      const data = await listar(MAPPING_CONTROLLER_PRODUTO);
-      setLista(data);
-   }
+    async function excluir(id) {
+        if (confirm("Deseja excluir este produto?")) {
+            await remover(MAPPING_CONTROLLER_PRODUTO, id);
+            carregar();
+        }
+    }
 
-   function editar(id) {}
+    function editar(id) {
+        window.location.href = "/produto-form?id=" + id;
+    }
 
-   async function confirmarRemover(id) {
-       if (confirm("Deseja realmente excluir este Produto")) {
-           console.log(id);
-       }
-   }
-
-   return (
-       <div>
-           <Menu />
-           <Breadcrumbs items={[
-               { label: "produto" },
-               { label: "Listar" }
-           ]} />
-
-           <div style={{ marginTop: '40px', marginLeft: '10%', marginRight: '10%' }}>
-<div className="overflow-x-auto shadow-sm">
-                   <div className="flex items-center justify-between mb-6" style={{marginTop: '20px', marginLeft: '10px', marginRight: '10px'}}>
-
- <h1 className="text-3xl font-bold text-gray-800">
-                           Produto
-                       </h1>
-                       <NewButton destino="/produto-form" />
-                   </div>
-                   <div className="divider divider-info" />
-                   <div className="overflow-x-auto" style={{marginTop: '30px'}}>
-                       <table className="table table-zebra">
-                           <thead>
-                               <tr style={{textAlign: 'center'}}>
-                                   <th>Nome</th>
-                                   <th>codigo</th>
-                                   <th>tipo</th>
-                                   
-                               </tr>
-                           </thead>
-                           <tbody>
-                               {lista.map(produto => (
-                                   <tr key={produto.id}>
-                                       <td style={{width: '50%'}}>{produto.nome}</td>
-                                       <td style={{textAlign: 'center'}}>{podruto.codigo}</td>
-                                       <td style={{textAlign: 'center'}}>{formatarData(produto.tipo)}</td>
-                                       <td style={{textAlign: 'center'}}>
-                                           <CrudActions
-                                               onEdit={() => editar(produto.id)}
-                                               onDelete={() => confirmarRemover(produto.id)}
-                                               onDetail={() => Detatlhar(produto.id)}
-                                           />
-                                       </td>
-                                   </tr>
-                               ))}
-                           </tbody>
-                       </table>
-                   </div>
-               </div>
-           </div>
-           <Footer/>
-       </div>
-   );
+    return (
+        <div>
+            <Menu />
+            <Breadcrumbs items={[{ label: "Produto" }, { label: "Listar" }]} />
+            <div style={{ margin: "40px 10%" }}>
+                <div className="flex items-center justify-between mb-6">
+                    <h1 className="text-3xl font-bold">Produtos</h1>
+                    <NewButton destino="/produto-form" />
+                </div>
+                <table className="table table-zebra">
+                    <thead>
+                        <tr><th>Nome</th><th>Código</th><th>Tipo</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody>
+                        {lista.map((produto) => (
+                            <tr key={produto.id}>
+                                <td>{produto.nome}</td>
+                                <td>{produto.codigo}</td>
+                                <td>{produto.tipo}</td>
+                                <td>
+                                    <CrudActions
+                                        onEdit={() => editar(produto.id)}
+                                        onDelete={() => excluir(produto.id)}
+                                        onDetail={() => alert(`Produto: ${produto.nome}`)}
+                                    />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <Footer />
+        </div>
+    );
 }
