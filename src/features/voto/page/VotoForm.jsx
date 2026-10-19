@@ -7,7 +7,7 @@ import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import SaveButton from "../../../shared/components/SaveButton";
 import {atualizar,buscarPorId,cadastrar} from "../../../shared/services/crudService";
-import { MAPPING_CONTROLLER_VOTO } from "../service/VotoService";
+import { MAPPING_CONTROLLER_VOTO } from "../service/votoService";
 
 
 export default function VotoForm() {

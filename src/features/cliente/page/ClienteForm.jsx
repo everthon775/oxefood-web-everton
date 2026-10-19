@@ -5,19 +5,52 @@ import BackButton from "../../../shared/components/BackButton";
 import Breadcrumbs from "../../../shared/components/Breadcrumbs";
 import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
-import SaveButton from "../shared/components/SaveButton";
-import { cadastrar } from "../../../shared/services/crudService";
+import SaveButton from "../../../shared/components/SaveButton";;
+import { buscarPorId, cadastrar } from "../../../shared/services/crudService";
 import { MAPPING_CONTROLLER_CLIENTE } from "../../cliente/service/clienteService";
 
 export default function ClienteForm() {
 
     const [cliente, setCliente] = useState({
+        id: null,
         nome: "",
         cpf: "",
         foneCelular: "",
         foneFixo: "",
         dataNascimento: ""
     });
+
+    useEffect(() => {
+
+       if (idCliente) {
+           carregarCliente();
+       }
+
+   }, [idCliente]);
+
+    async function carregarCliente() {
+
+       try {
+
+           const data = await buscarPorId(
+               MAPPING_CONTROLLER_CLIENTE,
+               idCliente
+           );
+
+           setCliente({
+               id: data.id,
+               nome: data.nome ?? "",
+               cpf: data.cpf ?? "",
+               foneCelular: data.foneCelular ?? "",
+               foneFixo: data.foneFixo ?? "",
+               dataNascimento: data.dataNascimento ?? ""
+           });
+
+       } catch (erro) {
+           toast.error("Erro ao carregar cliente.");
+       }
+   }
+
 
     async function salvar() {
         
@@ -34,10 +67,19 @@ export default function ClienteForm() {
         <div>
             <Menu />
 
+            {idCliente?
             <Breadcrumbs items={[
                 { label: "Cliente" },
-                { label: "Cadastrar" }
-            ]} />
+            {  label: "Alterar" }
+                    ]} />
+            :
+            <Breadcrumbs items={[
+                { label: "Cliente" },
+                {  label: "Cadastrar" }
+                ]} />
+                    }
+
+
             <div/>
                 <div style={{ marginTop: '40px', marginLeft: '10%', marginRight: '10%' }}>
 
@@ -46,7 +88,8 @@ export default function ClienteForm() {
                     <div className="flex items-center justify-between mb-6" style={{marginTop: '20px', marginLeft: '10px', marginRight: '10px'}}>
 
                         <h1 className="text-3xl font-bold text-gray-800">
-                            Novo Cliente
+                            {idCliente ? "Alterar Cliente" : "Novo Cliente"}
+
                         </h1>
 
                     </div>
@@ -142,7 +185,7 @@ export default function ClienteForm() {
 
                                 </div>
                             </div>
-<div className="flex w-full" >
+                            <div className="flex w-full" >
                                 <div className="card rounded-box grid grow p-8" style={{padding: '30px'}}>
 
                                     <div style={{marginTop: '50px', textAlign: 'left'}}>
