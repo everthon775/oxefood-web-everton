@@ -26,11 +26,11 @@ export default function Menu() {
                     </ul>
                 </div>
 
-                <button popoverTarget="menu-categorias"> <strong> Categoria </strong> </button>
+                <button popoverTarget="menu-votos"> <strong> Voto </strong> </button>
                 <div id="menu-categorias" popover="auto">
                     <ul className="menu">
-                        <li><a href="/categoria">Listar</a></li>
-                        <li><a href="/categoria-form">Cadastrar</a></li>
+                        <li><a href="/Voto">Listar</a></li>
+                        <li><a href="/Voto-form">Cadastrar</a></li>
                     </ul>
                 </div>
 

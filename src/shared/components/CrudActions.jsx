@@ -1,4 +1,4 @@
-export default function CrudActions({ onDetail, onEdit, onDelete }) {
+export default function CrudActions({ onDetail, onEdit, onDelete,  }) {
 
     return (
 

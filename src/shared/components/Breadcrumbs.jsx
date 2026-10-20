@@ -20,7 +20,7 @@ export default function Breadcrumbs({ items }) {
 
                         ) : (
 
-                            <span className="text-gray-500 font-medium">
+                            <span className="text-black-500 font-medium">
                                 {item.label}
                             </span>
 
