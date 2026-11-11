@@ -7,7 +7,7 @@ import Footer from "../../../shared/components/Footer";
 import Menu from "../../../shared/components/Menu";
 import SaveButton from "../../../shared/components/SaveButton";;
 import { buscarPorId, cadastrar } from "../../../shared/services/crudService";
-import { MAPPING_CONTROLLER_CLIENTE } from "../../cliente/service/clienteService";
+import { MAPPING_CONTROLLER_CLIENTE } from "../../clienteserviceclienteService";
 
 export default function ClienteForm() {
 

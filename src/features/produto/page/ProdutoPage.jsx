@@ -37,6 +37,11 @@ export default function ProdutoPage() {
                     <h1 className="text-3xl font-bold">Produtos</h1>
                     <NewButton destino="/produto-form" />
                 </div>
+
+                <p className="py-4">
+                <strong>Categoria:</strong> {produto.categoria.descricao}
+                    </p>
+
                 <table className="table table-zebra">
                     <thead>
                         <tr><th>Nome</th><th>Código</th><th>Tipo</th><th>Ações</th></tr>
